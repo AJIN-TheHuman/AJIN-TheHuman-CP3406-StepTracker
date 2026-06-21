@@ -7,10 +7,12 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * StepRepository wraps the Android SensorManager and exposes step count as a StateFlow.
- * It handles sensor registration and baseline offset for resetting steps.
+ * It also handles fetching motivational quotes via Retrofit.
  */
 class StepRepository(context: Context) : SensorEventListener {
     private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -21,6 +23,25 @@ class StepRepository(context: Context) : SensorEventListener {
 
     private var initialSteps = -1f
     private var lastTotalSteps = 0f
+
+    // Retrofit setup for quotes
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://zenquotes.io/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val quoteApi = retrofit.create(QuoteApiService::class.java)
+
+    /**
+     * Fetches a random motivational quote from the API.
+     */
+    suspend fun fetchRandomQuote(): Quote? {
+        return try {
+            quoteApi.getRandomQuote().firstOrNull()
+        } catch (e: Exception) {
+            null
+        }
+    }
 
     fun startListening() {
         // NOTE: To keep counting steps when the app is in the background or the screen is off,
