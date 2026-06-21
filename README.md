@@ -1,55 +1,50 @@
-# Utility App Starter – CP3406 / CP5307
+# StepTracker Utility App – CP3406 / CP5307
 
-This is a basic Android app template for **Assessment 1: Utility App** in CP3406/CP5603..  
-It provides the structure for a simple tabular UI using **Jetpack Compose** and **Material Design 3**.
-
----
-
-## Getting Started
-
-### How to Run
-1. Clone or download this repo  
-2. Open in Android Studio  
-3. Run on an emulator or physical device (API 26+ recommended)  
+StepTracker is a focused, "at-a-glance" Android utility application designed to help users track their daily physical activity. Built with **Jetpack Compose** and **Material Design 3**, it provides real-time step counting, goal progress visualization, and daily motivation.
 
 ---
 
-## Composables
+## 🚀 Key Features
 
-### UtilityApp()
-- Contains the screen layout using a Scaffold
-- Toggles content between Utility and Settings
-
-### UtilityScreen()
-- Displays a simple counter (replace with your utility logic)  
-- Includes a button to increment the counter
-
-### SettingsScreen()
-- Placeholder for user preferences or configuration  
-- Can be extended to modify main screen behavior (e.g., theme, units, limits)  
+- **Real-time Step Counting**: Utilizes the device's hardware `TYPE_STEP_COUNTER` sensor for accurate tracking.
+- **Goal Visualization**: A circular progress indicator showing the percentage of the daily goal achieved.
+- **Distance Calculation**: Automatically calculates distance walked in Kilometers or Miles based on user-defined stride length.
+- **Dynamic Settings**: Customizable daily goals, unit preferences (KM/Miles), and stride length.
+- **Daily Motivation**: Fetches random motivational quotes from the **ZenQuotes Web API** using Retrofit.
+- **Permission Handling**: Robust runtime permission requests for `ACTIVITY_RECOGNITION` on Android 10+.
 
 ---
 
-## Key Concepts Covered
+## 🛠 Technical Implementation (Weeks 1-5)
 
-| Week | Concept                        | Used In                          |
-|------|--------------------------------|----------------------------------|
-| 1    | Kotlin + Android Studio         | MainActivity.kt |
-| 2    | Jetpack Compose Layouts         | UtilityApp(), UtilityScreen(), SettingsScreen()   |
-| 3    | Material Design 3               | CP3406_CP5603UtilityAppStarterTemplateTheme, MaterialTheme.typography |
-| 4    | ViewModel | Not included in starter          |
-| 5    | Retrofit  | Not included in starter          |
-
----
-
-## Suggested Extensions
-- Replace counter with a real utility (e.g., hydration tracker, timer)  
-- Add a ViewModel for state management  
-- Use SharedPreferences or DataStore to persist settings  
-- Add a simple API call using Retrofit (e.g., fetch weather or quotes)  
+| Week | Topic | Implementation in StepTracker |
+|------|-------|-------------------------------|
+| 1 | Kotlin & Android Studio | Built using Kotlin with a clean, modular project structure. |
+| 2 | Jetpack Compose Layouts | Uses `Scaffold`, `Column`, `Row`, and `Box` for a responsive UI. |
+| 3 | Material Design 3 | Implements `Card`, `CircularProgressIndicator`, `Switch`, and `Slider` components. |
+| 4 | App Architecture | Follows MVVM with `StepViewModel`, `SettingsViewModel`, and a `StepRepository`. |
+| 5 | Web APIs (Retrofit) | Integrates `Retrofit` to fetch and display JSON data from external APIs. |
 
 ---
 
-## 📚 License
-This template is provided for educational use in CP3406.  
-Feel free to modify and extend it for your assessment.
+## 🏗 Architecture & Design Patterns
+
+- **MVVM Pattern**: Decouples UI (Composables) from business logic (ViewModels).
+- **Repository Pattern**: `StepRepository` abstracts both hardware sensors and network API calls.
+- **Manual Dependency Injection**: Dependencies are initialized in `MainActivity` and passed to ViewModels via Factories.
+- **State Management**: Uses `StateFlow` and `collectAsState` to ensure the UI reacts instantly to sensor changes.
+
+---
+
+## 📋 How to Run
+1. Clone the repository.
+2. Open in Android Studio (Ladybug or newer).
+3. Ensure your device/emulator supports the **Step Counter Sensor**.
+4. Grant the "Physical Activity" permission when prompted.
+5. Watch your steps update in real-time as you move!
+
+---
+
+## 📚 Acknowledgments
+- **API Provider**: [ZenQuotes.io](https://zenquotes.io/)
+- **Template**: JCU CP3406 Starter Template
