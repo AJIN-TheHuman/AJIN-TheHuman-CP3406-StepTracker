@@ -239,17 +239,31 @@ fun UtilityScreen(stepViewModel: StepViewModel, settingsViewModel: SettingsViewM
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Motivational Quote Placeholder
+        // Motivational Quote Section
+        val quote by stepViewModel.quote.collectAsState()
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Motivational quote will appear here",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
-                )
+                if (quote != null) {
+                    Text(
+                        text = "\"${quote?.q}\"",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                    )
+                    Text(
+                        text = "- ${quote?.a}",
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.align(Alignment.End),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Text(
+                        text = "Loading motivation...",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
         }
     }
